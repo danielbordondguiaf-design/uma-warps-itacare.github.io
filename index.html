@@ -13,10 +13,21 @@
         .lang-btn { padding: 8px 15px; border: none; border-radius: 20px; cursor: pointer; background: #ddd; font-weight: bold; transition: 0.3s; }
         .lang-btn.active { background: var(--primary); color: white; }
         .menu-item { padding: 20px; border-bottom: 1px solid #eee; text-align: left; }
+        
+        /* Nombre clickable */
+        .wrap-name { cursor: pointer; text-decoration: underline; text-decoration-style: dotted; }
+        .wrap-name:hover { color: var(--dark); }
+
         .title-row { display: flex; justify-content: space-between; align-items: center; color: var(--primary); font-weight: bold; font-size: 1.1em; }
         .price { color: #27ae60; font-size: 0.9em; }
         .desc { font-size: 0.9em; color: #555; margin-top: 5px; line-height: 1.4; }
         .tag { font-size: 0.75em; font-style: italic; color: #999; display: block; }
+
+        /* Estilos del Pop-up (Modal) */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
+        .modal-content { position: relative; max-width: 90%; max-height: 80%; border-radius: 15px; overflow: hidden; border: 3px solid white; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        .modal-content img { width: 100%; height: auto; display: block; }
+        .close-btn { position: absolute; top: 10px; right: 15px; color: white; font-size: 30px; font-weight: bold; cursor: pointer; text-shadow: 2px 2px 5px black; z-index: 1001; }
     </style>
 </head>
 <body>
@@ -36,33 +47,49 @@
     <div id="menu-content"></div>
 </div>
 
+<div id="imageModal" class="modal" onclick="closeModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <img id="modalImg" src="" alt="Wrap Photo">
+    </div>
+</div>
+
 <script>
 const data = {
     pt: {
         items: [
-            { name: "UMA CLASSIC", tag: "O queridinho da galera", price: "R$ 30", desc: "Frango grelhado em tiras, mix de folhas verdes, tomates secos, abacate e o nosso especial molho de mostarda e mel." },
-            { name: "UMA SAMBA", tag: "Sabor marcante e intenso", price: "R$ 30", desc: "Frango desfiado especiado em redução de shoyu, cebola caramelizada, hakusai (acelga), amendoim torrado e molho de coco." },
-            { name: "UMA REGGAE", tag: "100% Veggie - Good Vibes", price: "R$ 30", desc: "Rúcula fresca, cenoura ralada, pepino em conserva, repolho roxo, abacate e um cremoso molho de homus." },
-            { name: "UMA WAVE", tag: "Premium - O sabor do mar", price: "R$ 40", desc: "Camarões salteados, rúcula, abacate, manga fresca e a refrescância do molho de maracujá com coentro." }
+            { name: "UMA CLASSIC", img: "Warp_Clasicc.jpg", tag: "O queridinho da galera", price: "R$ 30", desc: "Frango grelhado em tiras, mix de folhas verdes, tomates secos, abacate e o nosso especial molho de mostarda e mel." },
+            { name: "UMA SAMBA", img: "Warp_samba.jpg", tag: "Sabor marcante e intenso", price: "R$ 30", desc: "Frango desfiado especiado em redução de shoyu, cebola caramelizada, hakusai (acelga), amendoim torrado e molho de coco." },
+            { name: "UMA REGGAE", img: "Warp_reggae.jpg", tag: "100% Veggie - Good Vibes", price: "R$ 30", desc: "Rúcula fresca, cenoura ralada, pepino em conserva, repolho roxo, abacate e um cremoso molho de homus." },
+            { name: "UMA WAVE", img: "Warp_wave.jpg", tag: "Premium - O sabor do mar", price: "R$ 40", desc: "Camarões salteados, rúcula, abacate, manga fresca e a refrescância do molho de maracujá com coentro." }
         ]
     },
     en: {
         items: [
-            { name: "UMA CLASSIC", tag: "Crowd favorite", price: "R$ 30", desc: "Grilled chicken strips, mixed greens, sun-dried tomatoes, avocado, and our special honey mustard sauce." },
-            { name: "UMA SAMBA", tag: "Bold and intense flavor", price: "R$ 30", desc: "Spiced shredded chicken in soy reduction, caramelized onions, hakusai, roasted peanuts, and coconut sauce." },
-            { name: "UMA REGGAE", tag: "100% Veggie - Good Vibes", price: "R$ 30", desc: "Fresh arugula, shredded carrots, pickled cucumber, red cabbage, avocado, and creamy hummus sauce." },
-            { name: "UMA WAVE", tag: "Premium - Sea Breeze", price: "R$ 40", desc: "Sautéed shrimp, arugula, avocado, fresh mango, and refreshing passion fruit sauce with cilantro." }
+            { name: "UMA CLASSIC", img: "Warp_Clasicc.jpg", tag: "Crowd favorite", price: "R$ 30", desc: "Grilled chicken strips, mixed greens, sun-dried tomatoes, avocado, and our special honey mustard sauce." },
+            { name: "UMA SAMBA", img: "Warp_samba.jpg", tag: "Bold and intense flavor", price: "R$ 30", desc: "Spiced shredded chicken in soy reduction, caramelized onions, hakusai, roasted peanuts, and coconut sauce." },
+            { name: "UMA REGGAE", img: "Warp_reggae.jpg", tag: "100% Veggie - Good Vibes", price: "R$ 30", desc: "Fresh arugula, shredded carrots, pickled cucumber, red cabbage, avocado, and creamy hummus sauce." },
+            { name: "UMA WAVE", img: "Warp_wave.jpg", tag: "Premium - Sea Breeze", price: "R$ 40", desc: "Sautéed shrimp, arugula, avocado, fresh mango, and refreshing passion fruit sauce with cilantro." }
         ]
     },
     es: {
         items: [
-            { name: "UMA CLASSIC", tag: "El favorito de todos", price: "R$ 30", desc: "Pollo grillado en tiras, mix de verdes, tomates secos, palta y nuestra salsa especial de mostaza y miel." },
-            { name: "UMA SAMBA", tag: "Sabor marcado e intenso", price: "R$ 30", desc: "Pollo desmechado especiado en reducción de soja, cebolla caramelizada, hakusai, maní tostado y salsa de coco." },
-            { name: "UMA REGGAE", tag: "100% Veggie - Buenas vibras", price: "R$ 30", desc: "Rúcula fresca, zanahoria rallada, pepino encurtido, repollo morado, palta y salsa de hummus cremosa." },
-            { name: "UMA WAVE", tag: "Premium - Sabor de mar", price: "R$ 40", desc: "Camarones salteados, rúcula, palta, mango fresco y la frescura de la salsa de maracuyá y cilantro." }
+            { name: "UMA CLASSIC", img: "Warp_Clasicc.jpg", tag: "El favorito de todos", price: "R$ 30", desc: "Pollo grillado en tiras, mix de verdes, tomates secos, palta y nuestra salsa especial de mostaza y miel." },
+            { name: "UMA SAMBA", img: "Warp_samba.jpg", tag: "Sabor marcado e intenso", price: "R$ 30", desc: "Pollo desmechado especiado en reducción de soja, cebolla caramelizada, hakusai, maní tostado y salsa de coco." },
+            { name: "UMA REGGAE", img: "Warp_reggae.jpg", tag: "100% Veggie - Buenas vibras", price: "R$ 30", desc: "Rúcula fresca, zanahoria rallada, pepino encurtido, repollo morado, palta y salsa de hummus cremosa." },
+            { name: "UMA WAVE", img: "Warp_wave.jpg", tag: "Premium - Sabor de mar", price: "R$ 40", desc: "Camarones salteados, rúcula, palta, mango fresco y la frescura de la salsa de maracuyá y cilantro." }
         ]
     }
 };
+
+function openModal(imgSrc) {
+    document.getElementById('modalImg').src = imgSrc;
+    document.getElementById('imageModal').style.display = 'flex';
+}
+
+function closeModal() {
+    document.getElementById('imageModal').style.display = 'none';
+}
 
 function setLang(lang, event) {
     document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
@@ -72,7 +99,7 @@ function setLang(lang, event) {
     container.innerHTML = data[lang].items.map(item => `
         <div class="menu-item">
             <div class="title-row">
-                <span>${item.name}</span>
+                <span class="wrap-name" onclick="openModal('${item.img}')">${item.name}</span>
                 <span class="price">${item.price}</span>
             </div>
             ${item.tag ? `<span class="tag">${item.tag}</span>` : ''}
