@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UMA WRAPS - Menú</title>
+    <title>UMA WRAPS - Itacaré</title>
     <style>
         :root { --primary: #e67e22; --dark: #5d4037; --bg: #f4e4bc; }
         body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); margin: 0; padding: 15px; text-align: center; }
@@ -23,54 +23,51 @@
 
 <div class="container">
     <div class="header">
-        <h1 style="margin:0">UMA WRAPS</h1>
-        <small>Itacaré - Bahia</small>
+        <h1 style="margin:0">WRAPS UMA</h1>
+        <small>Itacaré - Bahia | Fresh & Beach Food</small>
     </div>
 
     <div class="lang-btns">
-        <button class="lang-btn active" onclick="setLang('pt')">🇧🇷 PT</button>
-        <button class="lang-btn" onclick="setLang('en')">🇺🇸 EN</button>
-        <button class="lang-btn" onclick="setLang('es')">🇪🇸 ES</button>
+        <button class="lang-btn active" onclick="setLang('pt', event)">🇧🇷 PT</button>
+        <button class="lang-btn" onclick="setLang('en', event)">🇺🇸 EN</button>
+        <button class="lang-btn" onclick="setLang('es', event)">🇪🇸 ES</button>
     </div>
 
-    <div id="menu-content">
-        </div>
+    <div id="menu-content"></div>
 </div>
 
 <script>
 const data = {
     pt: {
         items: [
-            { name: "UMA TROPICAL", tag: "(Mais Vendida)", price: "R$ 30", desc: "Frango grelhado, manga fresca, abacate cremoso, mix de folhas verdes, iogurte + molho de limão." },
-            { name: "UMA VEGETARIANA", tag: "", price: "R$ 30", desc: "Abacate, manga, cenoura ralada, repolho roxo, rúcula, molho de tahine ou iogurte vegetal." },
-            { name: "UMA BRISA", tag: "(Opção clássica)", price: "R$ 30", desc: "Frango grelhado, abacate, tomate seco, rúcula, azeite de oliva + limão." },
-            { name: "UMA MAR", tag: "(Premium)", price: "R$ 40 ", desc: "Camarão salteado, manga, abacate, mix de folhas verdes e maionese de limão." }
+            { name: "UMA CLASSIC", tag: "O queridinho da galera", price: "R$ 30", desc: "Frango grelhado em tiras, mix de folhas verdes, tomates secos, abacate e o nosso especial molho de mostarda e mel." },
+            { name: "UMA SAMBA", tag: "Sabor marcante e intenso", price: "R$ 30", desc: "Frango desfiado especiado em redução de shoyu, cebola caramelizada, hakusai (acelga), amendoim torrado e molho de coco." },
+            { name: "UMA REGGAE", tag: "100% Veggie - Good Vibes", price: "R$ 30", desc: "Rúcula fresca, cenoura ralada, pepino em conserva, repolho roxo, abacate e um cremoso molho de homus." },
+            { name: "UMA WAVE", tag: "Premium - O sabor do mar", price: "R$ 40", desc: "Camarões salteados, rúcula, abacate, manga fresca e a refrescância do molho de maracujá com coentro." }
         ]
     },
     en: {
         items: [
-            { name: "UMA TROPICAL", tag: "(Bestseller)", price: "R$ 30", desc: "Grilled chicken, fresh mango, creamy avocado, mixed greens, yogurt + lemon dressing." },
-            { name: "UMA VEGETARIAN", tag: "", price: "R$ 30", desc: "Avocado, mango, shredded carrots, purple cabbage, arugula, tahini or vegan yogurt sauce." },
-            { name: "UMA BRISA", tag: "(Classic Option)", price: "R$ 30", desc: "Grilled chicken, avocado, sun-dried tomatoes, arugula, olive oil + lemon." },
-            { name: "UMA MAR", tag: "(Premium)", price: "R$ 40 ", desc: "Sautéed shrimp, mango, avocado, mixed greens and lemon mayo." }
+            { name: "UMA CLASSIC", tag: "Crowd favorite", price: "R$ 30", desc: "Grilled chicken strips, mixed greens, sun-dried tomatoes, avocado, and our special honey mustard sauce." },
+            { name: "UMA SAMBA", tag: "Bold and intense flavor", price: "R$ 30", desc: "Spiced shredded chicken in soy reduction, caramelized onions, hakusai, roasted peanuts, and coconut sauce." },
+            { name: "UMA REGGAE", tag: "100% Veggie - Good Vibes", price: "R$ 30", desc: "Fresh arugula, shredded carrots, pickled cucumber, red cabbage, avocado, and creamy hummus sauce." },
+            { name: "UMA WAVE", tag: "Premium - Sea Breeze", price: "R$ 40", desc: "Sautéed shrimp, arugula, avocado, fresh mango, and refreshing passion fruit sauce with cilantro." }
         ]
     },
     es: {
         items: [
-            { name: "UMA TROPICAL", tag: "(La más vendida)", price: "R$ 30", desc: "Pollo a la plancha, mango fresco, aguacate cremoso, mix de hojas verdes, yogur + salsa de limón." },
-            { name: "UMA VEGETARIANA", tag: "", price: "R$ 30", desc: "Aguacate, mango, zanahoria rallada, repollo morado, rúcula, salsa de tahini o yogur vegetal." },
-            { name: "UMA BRISA", tag: "(Opción clásica)", price: "R$ 30", desc: "Pollo a la plancha, aguacate, tomates secos, rúcula, aceite de oliva + limón." },
-            { name: "UMA MAR", tag: "(Premium)", price: "R$ 40 ", desc: "Camarones salteados, mango, aguacate, mix de hojas verdes y mayonesa de limón." }
+            { name: "UMA CLASSIC", tag: "El favorito de todos", price: "R$ 30", desc: "Pollo grillado en tiras, mix de verdes, tomates secos, palta y nuestra salsa especial de mostaza y miel." },
+            { name: "UMA SAMBA", tag: "Sabor marcado e intenso", price: "R$ 30", desc: "Pollo desmechado especiado en reducción de soja, cebolla caramelizada, hakusai, maní tostado y salsa de coco." },
+            { name: "UMA REGGAE", tag: "100% Veggie - Buenas vibras", price: "R$ 30", desc: "Rúcula fresca, zanahoria rallada, pepino encurtido, repollo morado, palta y salsa de hummus cremosa." },
+            { name: "UMA WAVE", tag: "Premium - Sabor de mar", price: "R$ 40", desc: "Camarones salteados, rúcula, palta, mango fresco y la frescura de la salsa de maracuyá y cilantro." }
         ]
     }
 };
 
-function setLang(lang) {
-    // Actualizar botones
+function setLang(lang, event) {
     document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
+    if(event) event.target.classList.add('active');
 
-    // Cargar menú
     const container = document.getElementById('menu-content');
     container.innerHTML = data[lang].items.map(item => `
         <div class="menu-item">
@@ -84,7 +81,6 @@ function setLang(lang) {
     `).join('');
 }
 
-// Carga inicial en Portugués
 setLang('pt');
 </script>
 
