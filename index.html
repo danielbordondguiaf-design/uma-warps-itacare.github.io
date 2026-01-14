@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UMA WRAPS - Menú</title>
+    <style>
+        :root { --primary: #e67e22; --dark: #5d4037; --bg: #f4e4bc; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); margin: 0; padding: 15px; text-align: center; }
+        .container { max-width: 500px; margin: auto; background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.15); border: 2px solid var(--primary); }
+        .header { background: var(--dark); color: white; padding: 25px; }
+        .lang-btns { margin: 20px 0; display: flex; justify-content: center; gap: 10px; }
+        .lang-btn { padding: 8px 15px; border: none; border-radius: 20px; cursor: pointer; background: #ddd; font-weight: bold; transition: 0.3s; }
+        .lang-btn.active { background: var(--primary); color: white; }
+        .menu-item { padding: 20px; border-bottom: 1px solid #eee; text-align: left; }
+        .title-row { display: flex; justify-content: space-between; align-items: center; color: var(--primary); font-weight: bold; font-size: 1.1em; }
+        .price { color: #27ae60; font-size: 0.9em; }
+        .desc { font-size: 0.9em; color: #555; margin-top: 5px; line-height: 1.4; }
+        .tag { font-size: 0.75em; font-style: italic; color: #999; display: block; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1 style="margin:0">UMA WRAPS</h1>
+        <small>Itacaré - Bahia</small>
+    </div>
+
+    <div class="lang-btns">
+        <button class="lang-btn active" onclick="setLang('pt')">🇧🇷 PT</button>
+        <button class="lang-btn" onclick="setLang('en')">🇺🇸 EN</button>
+        <button class="lang-btn" onclick="setLang('es')">🇪🇸 ES</button>
+    </div>
+
+    <div id="menu-content">
+        </div>
+</div>
+
+<script>
+const data = {
+    pt: {
+        items: [
+            { name: "UMA TROPICAL", tag: "(Mais Vendida)", price: "R$ 30", desc: "Frango grelhado, manga fresca, abacate cremoso, mix de folhas verdes, iogurte + molho de limão." },
+            { name: "UMA VEGETARIANA", tag: "", price: "R$ 30", desc: "Abacate, manga, cenoura ralada, repolho roxo, rúcula, molho de tahine ou iogurte vegetal." },
+            { name: "UMA BRISA", tag: "(Opção clássica)", price: "R$ 30", desc: "Frango grelhado, abacate, tomate seco, rúcula, azeite de oliva + limão." },
+            { name: "UMA MAR", tag: "(Premium)", price: "R$ 40 ", desc: "Camarão salteado, manga, abacate, mix de folhas verdes e maionese de limão." }
+        ]
+    },
+    en: {
+        items: [
+            { name: "UMA TROPICAL", tag: "(Bestseller)", price: "R$ 30", desc: "Grilled chicken, fresh mango, creamy avocado, mixed greens, yogurt + lemon dressing." },
+            { name: "UMA VEGETARIAN", tag: "", price: "R$ 30", desc: "Avocado, mango, shredded carrots, purple cabbage, arugula, tahini or vegan yogurt sauce." },
+            { name: "UMA BRISA", tag: "(Classic Option)", price: "R$ 30", desc: "Grilled chicken, avocado, sun-dried tomatoes, arugula, olive oil + lemon." },
+            { name: "UMA MAR", tag: "(Premium)", price: "R$ 40 ", desc: "Sautéed shrimp, mango, avocado, mixed greens and lemon mayo." }
+        ]
+    },
+    es: {
+        items: [
+            { name: "UMA TROPICAL", tag: "(La más vendida)", price: "R$ 30", desc: "Pollo a la plancha, mango fresco, aguacate cremoso, mix de hojas verdes, yogur + salsa de limón." },
+            { name: "UMA VEGETARIANA", tag: "", price: "R$ 30", desc: "Aguacate, mango, zanahoria rallada, repollo morado, rúcula, salsa de tahini o yogur vegetal." },
+            { name: "UMA BRISA", tag: "(Opción clásica)", price: "R$ 30", desc: "Pollo a la plancha, aguacate, tomates secos, rúcula, aceite de oliva + limón." },
+            { name: "UMA MAR", tag: "(Premium)", price: "R$ 40 ", desc: "Camarones salteados, mango, aguacate, mix de hojas verdes y mayonesa de limón." }
+        ]
+    }
+};
+
+function setLang(lang) {
+    // Actualizar botones
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+
+    // Cargar menú
+    const container = document.getElementById('menu-content');
+    container.innerHTML = data[lang].items.map(item => `
+        <div class="menu-item">
+            <div class="title-row">
+                <span>${item.name}</span>
+                <span class="price">${item.price}</span>
+            </div>
+            ${item.tag ? `<span class="tag">${item.tag}</span>` : ''}
+            <div class="desc">${item.desc}</div>
+        </div>
+    `).join('');
+}
+
+// Carga inicial en Portugués
+setLang('pt');
+</script>
+
+</body>
+</html>
